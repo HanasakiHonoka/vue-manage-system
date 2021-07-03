@@ -28,6 +28,24 @@ const routes = [
                 component: () => import (
                 /* webpackChunkName: "table" */
                 "../views/BaseTable.vue")
+            },  {
+                path: "/movieTable",
+                name: "movieTable",
+                meta: {
+                    title: '电影表'
+                },
+                component: () => import (
+                /* webpackChunkName: "table" */
+                "../views/MovieTable.vue")
+            }, {
+                path: "/directorTable",
+                name: "directorTable",
+                meta: {
+                    title: '导演表'
+                },
+                component: () => import (
+                /* webpackChunkName: "table" */
+                "../views/DirectorTable.vue")
             }, {
                 path: "/charts",
                 name: "basecharts",

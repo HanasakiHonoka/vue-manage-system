@@ -63,7 +63,17 @@ export default {
                 {
                     icon: "el-icon-lx-cascades",
                     index: "table",
-                    title: "基础表格"
+                    title: "基础表格",
+                    subs: [
+                        {
+                            index: "movieTable",
+                            title: "电影表"
+                        },
+                        {
+                            index: "directorTable",
+                            title: "导演表"
+                        }
+                    ]
                 },
                 {
                     icon: "el-icon-lx-copy",

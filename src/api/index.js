@@ -7,3 +7,19 @@ export const fetchData = query => {
         params: query
     });
 };
+
+export const getDic = query => {
+    return request({
+        url: './dic/all',
+        method: 'get',
+        params: query
+    });
+};
+
+export const submitForm = query => {
+    return request({
+        url: './form',
+        method:'post',
+        data: query
+    });
+};

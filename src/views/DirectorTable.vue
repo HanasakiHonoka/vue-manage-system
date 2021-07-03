@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 基础表格
+                    <i class="el-icon-lx-cascades"></i> 导演表
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -31,36 +31,14 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column prop="name" label="用户名"></el-table-column>
-                <el-table-column label="账户余额">
-                    <template #default="scope">￥{{ scope.row.money }}</template>
-                </el-table-column>
-                <el-table-column label="头像(查看大图)" align="center">
-                    <template #default="scope">
-                        <el-image
-                            class="table-td-thumb"
-                            :src="scope.row.thumb"
-                            :preview-src-list="[scope.row.thumb]"
-                        ></el-image>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
-                <el-table-column label="状态" align="center">
-                    <template #default="scope">
-                        <el-tag
-                            :type="
-                                scope.row.state === '成功'
-                                    ? 'success'
-                                    : scope.row.state === '失败'
-                                    ? 'danger'
-                                    : ''
-                            "
-                        >{{ scope.row.state }}</el-tag>
-                    </template>
-                </el-table-column>
 
-                <el-table-column prop="date" label="注册时间"></el-table-column>
+
+                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
+                <el-table-column prop="dicType" label="字典类型"></el-table-column>
+                <el-table-column prop="dicNo" label="字典编号"></el-table-column>
+                <el-table-column prop="dicName" label="名称"></el-table-column>
+
+
                 <el-table-column label="操作" width="180" align="center">
                     <template #default="scope">
                         <el-button
@@ -93,13 +71,13 @@
         <el-dialog title="编辑" v-model="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="70px">
                 <el-form-item label="用户名">
-                    <el-input v-model="form.name"></el-input>
+                    <el-input v-model="form.dicType"></el-input>
                 </el-form-item>
                 <el-form-item label="地址">
-                    <el-input v-model="form.address"></el-input>
+                    <el-input v-model="form.dicNo"></el-input>
                 </el-form-item>
                 <el-form-item label="余额">
-                    <el-input v-model="form.money"></el-input>
+                    <el-input v-model="form.dicName"></el-input>
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -113,9 +91,10 @@
 </template>
 
 <script>
-import { fetchData } from "../api/index";
+// import { reactive } from 'vue'
+import { getDic } from "../api/index";
 export default {
-    name: "basetable",
+    name: "directorTable",
     data() {
         return {
             query: {
@@ -140,16 +119,22 @@ export default {
     methods: {
         // 获取 easy-mock 的模拟数据
         getData() {
-            fetchData(this.query).then(res => {
+            getDic(this.query).then(res => {
                 console.log(res);
-                this.tableData = res.list;
-                this.pageTotal = res.pageTotal || 50;
+                this.tableData = res;
+                this.pageTotal = 23;
             });
         },
         // 触发搜索按钮
-        handleSearch() {
-            this.$set(this.query, "pageIndex", 1);
-            this.getData();
+        handleSearch(){
+            // reactive(this.query).pageTotal = 2;
+            // this.query.pageTotal = 2;
+            // this.getData();
+            this.query.address = "广东省";
+            // let vm = this;
+            // console.log(vm);
+            // vm.$set("pageTotal", 1);
+            // vm.$data
         },
         // 删除操作
         handleDelete(index) {
@@ -190,8 +175,11 @@ export default {
             this.$set(this.tableData, this.idx, this.form);
         },
         // 分页导航
-        handlePageChange(val) {
-            this.$set(this.query, "pageIndex", val);
+        handlePageChange(val){
+            console.log(val);
+            // this.$set(this.query, "pageIndex", val);
+            this.query.pageIndex = val;
+            // this.query = Object.assign({}, this.query)
             this.getData();
         }
     }

@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { submitForm } from '../api';
 export default {
     name: 'baseform',
     data() {
@@ -145,6 +146,8 @@ export default {
     methods: {
         onSubmit() {
             this.$message.success('提交成功！');
+            submitForm(this.form);
+            console.log(this.form);
         }
     }
 };
