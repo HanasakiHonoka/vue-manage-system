@@ -89,6 +89,10 @@ export default {
                             index: "form",
                             title: "基本表单"
                         },
+                        {
+                            index: "taskForm",
+                            title: "任务表单"
+                        },
                         //         {
                         //             index: "3-2",
                         //             title: "三级菜单",

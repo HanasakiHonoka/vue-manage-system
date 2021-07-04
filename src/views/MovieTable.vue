@@ -34,9 +34,10 @@
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
 
                 <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column prop="name" label="用户名"></el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
-                <el-table-column prop="date" label="注册时间"></el-table-column>
+                <el-table-column prop="title" label="电影名称"></el-table-column>
+                <el-table-column prop="releaseTime" label="上映日期"></el-table-column>
+                <el-table-column prop="duration" label="时长"></el-table-column>
+                <el-table-column prop="boxoffice" label="票房"></el-table-column>
                 
                 <el-table-column label="操作" width="180" align="center">
                     <template #default="scope">
@@ -90,14 +91,13 @@
 </template>
 
 <script>
-import { fetchData } from "../api/index";
+import { getMoviePage } from "../api/index";
 export default {
     name: "movieTable",
     data() {
         return {
             query: {
-                address: "",
-                name: "",
+                title: "",
                 pageIndex: 1,
                 pageSize: 10
             },
@@ -117,10 +117,11 @@ export default {
     methods: {
         // 获取 easy-mock 的模拟数据
         getData() {
-            fetchData(this.query).then(res => {
+            getMoviePage(this.query).then(res => {
+                res = res.data
                 console.log(res);
-                this.tableData = res.list;
-                this.pageTotal = res.pageTotal || 50;
+                this.tableData = res.records;
+                this.pageTotal = res.total;
             });
         },
         // 触发搜索按钮
@@ -168,7 +169,7 @@ export default {
         },
         // 分页导航
         handlePageChange(val) {
-            this.$set(this.query, "pageIndex", val);
+            this.query.pageIndex = val;
             this.getData();
         }
     }

@@ -5,7 +5,13 @@ const service = axios.create({
     // easy-mock服务挂了，暂时不使用了
     // baseURL: 'https://www.easy-mock.com/mock/592501a391470c0ac1fab128',
     timeout: 5000,
-    baseURL: "http://localhost:8088"
+    baseURL: "http://localhost:8088",
+    transformRequest: function(data) {
+        return JSON.stringify(data);
+    },
+    headers: {
+        'Content-Type': 'application/json'
+    },
 });
 
 service.interceptors.request.use(

@@ -64,6 +64,15 @@ const routes = [
                 component: () => import (
                 /* webpackChunkName: "form" */
                 "../views/BaseForm.vue")
+            },{
+                path: "/taskForm",
+                name: "taskForm",
+                meta: {
+                    title: '任务表单'
+                },
+                component: () => import (
+                /* webpackChunkName: "form" */
+                "../views/TaskForm.vue")
             }, {
                 path: "/tabs",
                 name: "tabs",
